@@ -29,6 +29,7 @@ Một câu hỏi đặt ra là tại sao sử dụng GO:
      goroutine giao tiếp với nhau thông qua channel.
      
 Example: Hello World
+     
      package main
      
      import "fmt"
