@@ -17,7 +17,7 @@
     
      + Kiểu con trỏ - pointer: lưu địa chỉ bộ nhớ của biến
     
-     + Xử lý đồng thời – concurrency: goroutine quàn lý thread trong Go runtime, goroutine giao tiếp với nhau thông qua channel.
+     + Xử lý đồng thời – concurrency: goroutine quản lý thread trong Go runtime, goroutine giao tiếp với nhau thông qua channel.
      
 Example: Hello World
      package main
@@ -29,4 +29,68 @@ Example: Hello World
      }
 ##### Tham khảo thêm 
 Có thể tham khảo thêm tại: https://golang.org/doc/code.html Hoặc : https://www.tutorialspoint.com/go/go_basic_syntax.htm.
+## 2. Những đặc điểm chính của GO 
+    Go là ngôn ngữ statically typed.
+    Go có sẵn một bộ Garbage collection và Memory safety.
+    Chuỗi kí tự trong Go đều được mặc định encode về UTF-8.
+    Có cú pháp cực kì đơn giản.
+#### 2.1 Hướng dẫn cài đặt
+    Có thể download golang và cài đặt tại: https://golang.org/dl/ 
+#### 2.2 GO PATH , Go workspace 
+    Ở version trước 1.11 thì Go ràng buộc chúng ta thư mục tổ chức để lưu giữ các đoạna code 
+    - Toàn bộ Go code và package bạn import phải nằm trong một workspace. Một workspace là một thư 
+    mục trong hệ thống mà đường dẫn là một biến môi trường tên là GOPATH.
+    
+    Thư mục workspace sẽ chứa những thư mục con như sau:
+    
+    **src**: Nơi đây sẽ chứa toàn bộ source code chương trình Go.
+    **bin**: Nơi đây sẽ chứa mã nhị phân là những đoạn code Go từ src được compile.
+    **pkg**: Nơi đây sẽ chứa các package mà ta sẽ import và sử dụng trong nhưng đoạn code Go trong thư mục src.
+    
+Trong GO, để import một thư viện hoặc 1 package ta sử dụng:
+`import "tên package"` hoặc  `import "main/<tên package con>"`
+
+Để chạy được chương trình Hello world ở ví dụ trên, cách đơn giản là ta sử dụng lệnh 
+`go run main.go `
+<img src="src/run.png"
+     alt="Go run hello word"
+     style="float: left; margin-right: 10px;" />
+
+Ngoài ra bạn có thể build code GO của bạn thành mã nhị phân bằng câu lệnh `go build` 
+
+    $ cd $GOPATH/src/hello
+    $ go build
+    $ ./hello
+    Hello world
+    
+Với version lớn 1.11, bạn có thể xây dựng ứng dụng Go của mình bên ngoài GOPATH. 
+
+Trong version 1.11, khi bạn đặt mã nguồn bên trong $GOPATH, nó bỏ qua tính năng của modules và sử dụng GOPATH cho tìm kiếm các phụ thuộc mã nguồn. Tuy nhiên, nếu bạn đặt mã nguồn bên ngoài GOPATH, hỗ trợ modules được bật tự động. 
+
+Điều này có nghĩa là, bạn có thể xây dựng ứng dụng của mình từ nhiều thư viện mà bạn muốn!
+
+## 3. Go Package
+Ta có coi một package là một gói các đoạn code, giúp bạn tổ chức chương trình của bạn. Nó giúp bạn có thể gói một hoặc nhiều file source code vào một file duy nhất và có thể sử dụng lại
+
+Bạn có thể coi một package trong Go như một namespaces trong các ngôn ngữ khác. Điểm duy nhất khác biệt là sẽ không có các Package con, và các package sẽ nhỏ và nhiều.
+
+Tất cả source code đều phải nằm trong một package
+Chương trình của Go được cấu tạo bởi một hoặc nhiều package.
+
+**Single concept**
+
+Ta chỉ bỏ nhưng đoạn code liên quan vào trong package và phải đặt tên pacakge theo đúng chuẩn. Bạn có thể đọc guide cách đặt tên package tại đây https://blog.golang.org/package-names.
+
+Có thể chưa không hoặc nhiều function và state
+
+Package trong go có thể chỉ cần chứa duy nhất một function như tỉnh tổng 2 số. Package không nhất thiết phải to như các ngôn ngữ khác.
+
+**Tái sử dụng**
+
+
+Ta có thể export function và data tử một pacakge khác.
+
+**Import duy nhất một lần**
+
+Bạn có thể import một package trong nhiều package khác, và nó sẽ chỉ được import duy nhất một lần mà thôi.
 
