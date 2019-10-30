@@ -43,9 +43,17 @@ Có thể tham khảo thêm tại: https://golang.org/doc/code.html Hoặc : htt
     
     Thư mục workspace sẽ chứa những thư mục con như sau:
     
-    **src**: Nơi đây sẽ chứa toàn bộ source code chương trình Go.
-    **bin**: Nơi đây sẽ chứa mã nhị phân là những đoạn code Go từ src được compile.
-    **pkg**: Nơi đây sẽ chứa các package mà ta sẽ import và sử dụng trong nhưng đoạn code Go trong thư mục src.
+    src: 
+    
+    Nơi đây sẽ chứa toàn bộ source code chương trình Go.
+    
+    bin: 
+    
+    Nơi đây sẽ chứa mã nhị phân là những đoạn code Go từ src được compile.
+    
+    pkg: 
+    
+    Nơi đây sẽ chứa các package mà ta sẽ import và sử dụng trong nhưng đoạn code Go trong thư mục src.
     
 Trong GO, để import một thư viện hoặc 1 package ta sử dụng:
 `import "tên package"` hoặc  `import "main/<tên package con>"`
@@ -94,3 +102,12 @@ Ta có thể export function và data tử một pacakge khác.
 
 Bạn có thể import một package trong nhiều package khác, và nó sẽ chỉ được import duy nhất một lần mà thôi.
 
+## 4. Go concurrency, Channel 
+Một câu hỏi đặt ra là tại sao sử dụng GO: 
+- Một trong những điểm nổi bậc của go là gorouting. 
+- Code trong go rất dễ maintain vì 
+    + Nó không có classes: Mọi thứ trong Go được đóng gói bằng package, và go chỉ có struct thay vì class.
+- Dễ học.
+- Biên dịch ra nhiều nền tảng: bạn có thể build trên Unix, Linux, Windows sau khi biên dịch, chỉ cần 1 file duy nhất, copy đến hệ điều hành đích là chạy, rất đơn giản
+#### 4.1 Go concurrency 
+Cocurrency là tính năng chủ lực của ngôn ngữ lập trình Go để tận dụng năng lực xử lý của CPU. Thông thường các ngôn ngữ lâp trình khác phải phụ thuộc sự cấp phát tài nguyên của hệ điều hành để có thể chạy Concurrency, trong khi đó Go có thể chạy concurrency mà không phụ thuộc hệ điều hành. Concurrency gần giống với thread, trong Go thì việc giao tiếp giữa các goroutine khá đơn giản với channel, có thể truyền dữ liệu giữa các goroutine với nhau bằng bất cứ loại dữ liệu nào.
