@@ -13,11 +13,13 @@
      + Nhất quán, đơn giản, an toàn
     
      + Hỗ trợ Interface và Type Một số đặc trưng của Golang Method: 
-       Golang không có classes, nhưng nó cho phép định nghĩa method dựa trên các kiểu dữ liệu tự đinh nghĩa. Intefaces: định nghĩa tập hợp các phương thức sẽ thực thi.
+       Golang không có classes, nhưng nó cho phép định nghĩa method dựa trên 
+       các kiểu dữ liệu tự đinh nghĩa. Intefaces: định nghĩa tập hợp các phương thức sẽ thực thi.
     
      + Kiểu con trỏ - pointer: lưu địa chỉ bộ nhớ của biến
     
-     + Xử lý đồng thời – concurrency: goroutine quản lý thread trong Go runtime, goroutine giao tiếp với nhau thông qua channel.
+     + Xử lý đồng thời – concurrency: goroutine quản lý thread trong Go runtime, 
+     goroutine giao tiếp với nhau thông qua channel.
      
 Example: Hello World
      package main
@@ -95,8 +97,7 @@ Package trong go có thể chỉ cần chứa duy nhất một function như t�
 
 **Tái sử dụng**
 
-
-Ta có thể export function và data tử một pacakge khác.
+Ta có thể export function và data từ một pacakge khác.
 
 **Import duy nhất một lần**
 
@@ -111,3 +112,55 @@ Một câu hỏi đặt ra là tại sao sử dụng GO:
 - Biên dịch ra nhiều nền tảng: bạn có thể build trên Unix, Linux, Windows sau khi biên dịch, chỉ cần 1 file duy nhất, copy đến hệ điều hành đích là chạy, rất đơn giản
 #### 4.1 Go concurrency 
 Cocurrency là tính năng chủ lực của ngôn ngữ lập trình Go để tận dụng năng lực xử lý của CPU. Thông thường các ngôn ngữ lâp trình khác phải phụ thuộc sự cấp phát tài nguyên của hệ điều hành để có thể chạy Concurrency, trong khi đó Go có thể chạy concurrency mà không phụ thuộc hệ điều hành. Concurrency gần giống với thread, trong Go thì việc giao tiếp giữa các goroutine khá đơn giản với channel, có thể truyền dữ liệu giữa các goroutine với nhau bằng bất cứ loại dữ liệu nào.
+
+Vậy làm thế nào để 1 máy tính có CPU 1 nhân có thể xử lí nhiều tác vụ cùng lúc, trong khi 1 nhân CPU chỉ có thể xử lí 1 việc tại 1 thời điểm? Concurrency tức là xử lí 1 tác vụ tại 1 thời điểm, nhưng CPU không xử lí hết 1 tác vụ rồi mới đến tác vụ khác, mà sẽ dành 1 lúc cho tác vụ này, 1 lúc cho tác vụ kia. Do vậy, chúng ta có cảm giác máy tính thực hiện nhiều tác vụ cùng 1 lúc, nhưng thực chất chỉ có 1 tác vụ được xử lí tại 1 thời điểm.
+Cùng xem biểu đồ dưới để rõ hơn về cách CPU phân bố khi chúng ta sử dựng web ở ví dụ trên
+
+<img src="src/concurrency.jpg"
+     alt="Go run hello word"
+     style="float: left; margin-right: 10px;" />
+     
+Từ biểu đồ trên, chúng ta có thể thấy rằng, CPU 1 nhân phân chia thời gian làm việc dựa trên độ ưu tiên của cùng tác vụ. Ví dụ, khi đang scroll trang, việc nghe nhạc sẽ có độ ưu tiên thấp hơn, nên có thể nhạc của bạn sẽ bị dừng do đường truyền kém, nhưng bạn vẫn có thể kéo trang lên xuống.
+
+Cách sử dụng go routing cũng rất dễ bằng cách đặt keyword `go` trước key `func`
+
+Example : 
+        
+        func main() {
+        	links := []string{
+        		"http://google.com",
+        		"http://facebook.com",
+        		"http://stackoverflow.com",
+        		"http://golang.org",
+        		"http://amazon.com",
+        	}
+        
+        	c := make(chan string)
+        
+        	for _, link := range links {
+        		go checkLink(link, c)
+        	}
+        
+        	for l := range c {
+        		go func(link string) {
+        			time.Sleep(5 * time.Second)
+        			checkLink(link, c)
+        		}(l)
+        	}
+        }
+
+#### 4.2 Channels
+`Channels` đóng vai trò quan trọng khi sử dụng goroutines. Chúng giúp ngăn ngừa race condition và việc truy cập không đúng đến các dữ liệu được chia sẻ.
+**_Example**_ :
+
+    func checkLink(link string, c chan string) {
+     	_, err := http.Get(link)
+     	if err != nil {
+     		fmt.Println(link, "might be down!")
+     		c <- link
+     		return
+     	}
+     
+     	fmt.Println(link, "is up!")
+     	c <- link
+     }
