@@ -1,4 +1,11 @@
 ## 1.INTRO 
+Một câu hỏi đặt ra là tại sao sử dụng GO: 
+- Một trong những điểm nổi bậc của go là gorouting. 
+- Code trong go rất dễ maintain vì 
+    + Nó không có classes: Mọi thứ trong Go được đóng gói bằng package, và go chỉ có struct thay vì class.
+- Dễ học.
+- Biên dịch ra nhiều nền tảng: bạn có thể build trên Unix, Linux, Windows sau khi biên dịch, chỉ cần 1 file duy nhất, copy đến hệ điều hành đích là chạy, rất đơn giản
+
 #### 1.1 Tổng quan về GO ? 
  Có một bài toán đau đầu dành cho các công ty là khi họ đã lên tới tầng scale cho một dự án. Thời gian đầu thì sẽ là optimize code, database, scale phần cứng… nhưng khi tới một lượng user cực lớn thì vấn đề đó sẽ càng ngày càng nan giải. Và giải pháp của một số công ty đó là chọn Go. Nó được thiết kế để có thể scale một hệ thống với số request lớn, có thể lên tới hàng triệu request/s. Thêm một lí do nữa là Go là một ngôn ngữ đơn giản, learning curve thuộc dạng dễ nhất trong các ngôn ngữ, vì thế chi phí để chuyển qua Go thấp. Ngoài ra còn một số tiêu chí: build time nhanh, chuẩn hóa code giữa các thành viên trong team bằng vô số tool xịn…
  Ngày nay khi phần cứng ngày càng phát triển, CPU đa nhân thì các ngôn ngữ theo concurrency model sẽ là xu hướng. Go là một trong số đó. Go không phải là một ngôn ngữ mạnh tuyệt đối. Concurrency Go sẽ không bằng Erlang, Clojure, về mức độ strong typed thì lại càng không thể so sánh với các ngôn ngữ functional như Haskell, Scala, về việc làm prototype nhanh thì không thể bằng Ruby hay Node. Nhưng lí do mọi người thích Go là vì nó support ở mức “vừa đủ xài” hay theo mọi người vẫn hay nói là “simple enough to build the world”.
@@ -104,12 +111,6 @@ Ta có thể export function và data từ một pacakge khác.
 Bạn có thể import một package trong nhiều package khác, và nó sẽ chỉ được import duy nhất một lần mà thôi.
 
 ## 4. Go concurrency, Channel 
-Một câu hỏi đặt ra là tại sao sử dụng GO: 
-- Một trong những điểm nổi bậc của go là gorouting. 
-- Code trong go rất dễ maintain vì 
-    + Nó không có classes: Mọi thứ trong Go được đóng gói bằng package, và go chỉ có struct thay vì class.
-- Dễ học.
-- Biên dịch ra nhiều nền tảng: bạn có thể build trên Unix, Linux, Windows sau khi biên dịch, chỉ cần 1 file duy nhất, copy đến hệ điều hành đích là chạy, rất đơn giản
 #### 4.1 Go concurrency 
 Cocurrency là tính năng chủ lực của ngôn ngữ lập trình Go để tận dụng năng lực xử lý của CPU. Thông thường các ngôn ngữ lâp trình khác phải phụ thuộc sự cấp phát tài nguyên của hệ điều hành để có thể chạy Concurrency, trong khi đó Go có thể chạy concurrency mà không phụ thuộc hệ điều hành. Concurrency gần giống với thread, trong Go thì việc giao tiếp giữa các goroutine khá đơn giản với channel, có thể truyền dữ liệu giữa các goroutine với nhau bằng bất cứ loại dữ liệu nào.
 
