@@ -164,3 +164,4 @@ Example :
      	fmt.Println(link, "is up!")
      	c <- link
      }
+---
